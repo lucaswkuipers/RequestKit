@@ -2,7 +2,7 @@
 
 ![Copy of Sound (819 × 375 px)-2](https://user-images.githubusercontent.com/59176579/222411851-867e5655-aa03-46ff-8ef0-92f6e1de7bc6.png)
 
-RESTKit is a lightweight Swift package for making HTTP requests and handling responses. It provides a simple protocol called Request that you can use to define your own HTTP requests, and an extension that adds convenient methods for sending requests and decoding response data.
+RESTKit is a lightweight Swift package for making basic HTTP requests and handling responses. It provides a simple protocol called Request that you can use to define your own HTTP requests and an extension that adds convenient methods for sending requests and decoding response data.
 
 ## Installation
 
@@ -19,33 +19,24 @@ To use RESTKit in your Swift package, you first need to define a struct or class
 Here's an example of a simple Request implementation that sends a GET request to an API endpoint:
 
 ```swift
-Copy code
 struct MyRequest: Request {
     typealias RemoteModel = MyResponseModel
 
-    var url: URL? = URL(string: "https://api.example.com/data")
+    var url: URL? = "https://api.example.com/data"
     var method: HTTPMethod = .get
 
     // Implement any additional properties or methods required by the Request protocol here
 }
-
 ```
 
 Once you've defined your Request, you can create an instance of it and call the send() method to send the request and retrieve the response data:
 
 ```swift
-Copy code
 let request = MyRequest()
-do {
-    let response = try await request.send()
-    // Use the response data here
-} catch {
-    // Handle any errors here
-}
-
+let response = await request.send()
 ```
 
-The send() method returns a Result object that contains the decoded response data or an error. You can use the decode(_:) method to decode the response data into a Swift struct or class that conforms to the Decodable protocol.
+The send() method returns a Result object that contains the decoded response data or an error.
 
 ## Contributing
 
