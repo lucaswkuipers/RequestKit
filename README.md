@@ -29,6 +29,8 @@ struct MyRequest: Request {
 }
 ```
 
+By default, header and body are nil.
+
 Once you've defined your Request, you can create an instance of it and call the send() method to send the request and retrieve the response data:
 
 ```swift
