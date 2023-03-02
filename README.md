@@ -24,8 +24,8 @@ struct MyRequest: Request {
 
     var url: URL? = "https://api.example.com/data"
     var method: HTTPMethod = .get
-
-    // Implement any additional properties or methods required by the Request protocol here
+    var header: [String: String] { ... }
+    var body: Data? { ... }
 }
 ```
 
