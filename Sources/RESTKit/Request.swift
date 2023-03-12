@@ -55,9 +55,7 @@ public extension Request {
             let remoteModel = try decode(data)
             return .success(remoteModel)
         } catch {
-//            if Configuration.isLoggingEnabled {
-                print("🚩 ERROR: \(error.localizedDescription)")
-//            }
+            print("🚩 ERROR: \(error.localizedDescription)")
             return .failure(error)
         }
     }
