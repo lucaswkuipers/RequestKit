@@ -49,6 +49,7 @@ public extension Request {
 }
 
 public extension Request {
+    @available(iOS 13.0.0, *)
     func send() async -> Result<RemoteModel, Error> {
         do {
             let data = try await toURLRequest().getSuccessData()

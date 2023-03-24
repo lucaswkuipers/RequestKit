@@ -3,8 +3,12 @@ import XCTest
 
 final class RESTKitTests: XCTestCase {
     func test() {
-        Task {
-            await MockRequest().send()
+        if #available(iOS 13.0, *) {
+            Task {
+                await MockRequest().send()
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
 }
