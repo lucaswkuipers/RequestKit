@@ -2,11 +2,11 @@
 
 <img src="https://user-images.githubusercontent.com/59176579/236515125-559bbfc1-42bf-4322-b226-d886b1e5f43e.png"/>
 
-RESTKit is a lightweight Swift package for making basic HTTP requests and handling responses. It provides a simple protocol called Request that you can use to define your own HTTP requests (by providing just the necessary parts) and then call it with `send()`
+RequestKit is a lightweight Swift package for making basic HTTP requests and handling responses. It provides a simple protocol called Request that you can use to define your own HTTP requests (by providing just the necessary parts) and then call it with `send()`
 
 ## Installation
 
-You can install RESTKit using the Swift Package Manager. To add RESTKit to your Xcode project, select File > Swift Packages > Add Package Dependency, and enter the following URL:
+You can install RequestKit using the Swift Package Manager. To add RequestKit to your Xcode project, select File > Swift Packages > Add Package Dependency, and enter the following URL:
 
 ```swift
 https://github.com/your_username/restkit.git
@@ -14,7 +14,7 @@ https://github.com/your_username/restkit.git
 
 ## Usage
 
-To use RESTKit in your Swift package, you first need to define a struct or class that conforms to the Request protocol. The Request protocol defines the properties and methods that your request must have, including the URL, HTTP method, headers, and body. You can also define an associated type that specifies the type of the response data that your request expects.
+To use RequestKit in your Swift package, you first need to define a struct or class that conforms to the Request protocol. The Request protocol defines the properties and methods that your request must have, including the URL, HTTP method, headers, and body. You can also define an associated type that specifies the type of the response data that your request expects.
 
 Here's an example of a simple Request implementation that sends a GET request to an API endpoint:
 
@@ -46,4 +46,4 @@ Contributions are welcome! If you find a bug, have a feature request, or want to
 
 ## License
 
-RESTKit is released under the MIT license. See LICENSE for details.
+RequestKit is released under the MIT license. See LICENSE for details.
