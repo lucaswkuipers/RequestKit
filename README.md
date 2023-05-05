@@ -1,6 +1,7 @@
-# RESTKit
+# RequestKit
 
-![Copy of Sound (819 × 375 px)-2](https://user-images.githubusercontent.com/59176579/222411851-867e5655-aa03-46ff-8ef0-92f6e1de7bc6.png)
+[RequestKit](https://user-images.githubusercontent.com/59176579/236515125-559bbfc1-42bf-4322-b226-d886b1e5f43e.png)
+
 
 RESTKit is a lightweight Swift package for making basic HTTP requests and handling responses. It provides a simple protocol called Request that you can use to define your own HTTP requests (by providing just the necessary parts) and then call it with `send()`
 
