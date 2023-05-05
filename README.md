@@ -9,7 +9,7 @@ RequestKit is a lightweight Swift package for making basic HTTP requests and han
 You can install RequestKit using the Swift Package Manager. To add RequestKit to your Xcode project, select File > Swift Packages > Add Package Dependency, and enter the following URL:
 
 ```swift
-https://github.com/your_username/restkit.git
+https://github.com/lucaswkuipers/RequestKit.git
 ```
 
 ## Usage
