@@ -49,7 +49,7 @@ public extension Request {
 }
 
 public extension Request {
-    @available(iOS 13.0.0, *)
+    @available(iOS 15.0, *)
     func send() async -> Result<RemoteModel, Error> {
         do {
             let data = try await toURLRequest().getSuccessData()
@@ -60,4 +60,28 @@ public extension Request {
             return .failure(error)
         }
     }
+
+    func send(completion: @escaping (Result<RemoteModel, Error>) -> Void) {
+        do {
+            try toURLRequest().getSuccessData { result in
+                switch result {
+                case .success(let data):
+                    do {
+                        let remoteModel = try decode(data)
+                        completion(.success(remoteModel))
+                    } catch {
+                        print("🚩 ERROR: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                case .failure(let error):
+                    print("🚩 ERROR: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        } catch {
+            print("🚩 ERROR: \(error.localizedDescription)")
+            completion(.failure(error))
+        }
+    }
+
 }
