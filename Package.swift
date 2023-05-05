@@ -1,20 +1,20 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.8
 
 import PackageDescription
 
 let package = Package(
-    name: "RESTKit",
+    name: "RequestKit",
     products: [
         .library(
-            name: "RESTKit",
-            targets: ["RESTKit"]),
+            name: "RequestKit",
+            targets: ["RequestKit"]),
     ],
     targets: [
         .target(
-            name: "RESTKit",
+            name: "RequestKit",
             dependencies: []),
         .testTarget(
-            name: "RESTKitTests",
-            dependencies: ["RESTKit"]),
+            name: "RequestKitTests",
+            dependencies: ["RequestKit"]),
     ]
 )

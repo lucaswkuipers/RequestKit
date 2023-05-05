@@ -1,5 +1,5 @@
 import XCTest
-@testable import RESTKit
+@testable import RequestKit
 
 final class RESTKitTests: XCTestCase {
     func test() {
