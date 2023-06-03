@@ -90,22 +90,22 @@ public extension URLRequest {
         return request
     }
 
-    @discardableResult
-    func body(_ body: [String: Any]) -> URLRequest {
-        var request = self
-        let data = try? JSONSerialization.data(withJSONObject: body, options: [])
-        request.httpBody = data
-        return request
-    }
+//    @discardableResult
+//    func body(_ body: [String: Any]) -> URLRequest {
+//        var request = self
+//        let data = try? JSONSerialization.data(withJSONObject: body, options: [])
+//        request.httpBody = data
+//        return request
+//    }
 
-    @discardableResult
-    func body<T: Encodable>(_ body: T) -> URLRequest {
-        var request = self
-        let encoder = JSONEncoder()
-        let data = try? encoder.encode(body)
-        request.httpBody = data
-        return request
-    }
+//    @discardableResult
+//    func body<T: Encodable>(_ body: T) -> URLRequest {
+//        var request = self
+//        let encoder = JSONEncoder()
+//        let data = try? encoder.encode(body)
+//        request.httpBody = data
+//        return request
+//    }
 
     @discardableResult
     func cachePolicy(_ policy: CachePolicy) -> URLRequest {
