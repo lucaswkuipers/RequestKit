@@ -37,8 +37,7 @@ public extension URLRequest {
 
     @discardableResult
     func authorizationBearer(_ token: String) -> Self {
-        var request = self
-        return request.authorization("Bearer \(token)")
+        return authorization("Bearer \(token)")
     }
 
     @discardableResult
@@ -90,23 +89,6 @@ public extension URLRequest {
         return request
     }
 
-//    @discardableResult
-//    func body(_ body: [String: Any]) -> URLRequest {
-//        var request = self
-//        let data = try? JSONSerialization.data(withJSONObject: body, options: [])
-//        request.httpBody = data
-//        return request
-//    }
-
-//    @discardableResult
-//    func body<T: Encodable>(_ body: T) -> URLRequest {
-//        var request = self
-//        let encoder = JSONEncoder()
-//        let data = try? encoder.encode(body)
-//        request.httpBody = data
-//        return request
-//    }
-
     @discardableResult
     func cachePolicy(_ policy: CachePolicy) -> URLRequest {
         var request = self
@@ -118,18 +100,40 @@ public extension URLRequest {
         URLSession.shared.dataTask(with: self, completionHandler: completion).resume()
     }
 
-    func perform<T: Decodable>(completion: @escaping (Result<T, Error>) -> Void) {
-        perform { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data {
-                do {
-                    let decodedObject = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(decodedObject))
-                } catch let decodeError {
-                    completion(.failure(decodeError))
+    @available(iOS 13.0, *)
+    func perform() async -> (data: Data, response: URLResponse)? {
+        if #available(iOS 15.0, *) {
+            return try? await URLSession.shared.data(for: self)
+        } else {
+            return try? await withCheckedThrowingContinuation { continuation in
+                perform { (data, response, error) in
+                    if let error {
+                        continuation.resume(throwing: error)
+                    } else if let data, let response {
+                        continuation.resume(returning: (data, response))
+                    } else {
+                        let error = NSError(
+                            domain: "",
+                            code: 0,
+                            userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
+                        )
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
         }
+    }
+
+}
+
+public extension Encodable {
+    func encoded(with encoder: JSONEncoder = JSONEncoder()) -> Data? {
+        try? encoder.encode(self)
+    }
+}
+
+public extension Data {
+    func decoded<T: Decodable>(with decoder: JSONDecoder = JSONDecoder(), of type: T.Type) -> T? {
+        try? decoder.decode(type, from: self)
     }
 }
