@@ -100,9 +100,9 @@ public extension URLRequest {
         URLSession.shared.dataTask(with: self, completionHandler: completion).resume()
     }
 
-    @available(iOS 13.0, *)
+    @available(iOS 13.0, macOS 10.15, *)
     func perform() async -> (data: Data, response: URLResponse)? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 15.0, macOS 12.0, *) {
             return try? await URLSession.shared.data(for: self)
         } else {
             return try? await withCheckedThrowingContinuation { continuation in
