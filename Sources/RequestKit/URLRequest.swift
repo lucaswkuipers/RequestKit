@@ -101,13 +101,14 @@ public extension URLRequest {
     }
 
     @available(iOS 13.0, macOS 10.15, *)
-    func perform() async -> (data: Data, response: URLResponse)? {
+    func perform(onError: @escaping (Error) -> Void = {_ in}) async -> (data: Data, response: URLResponse)? {
         if #available(iOS 15.0, macOS 12.0, *) {
             return try? await URLSession.shared.data(for: self)
         } else {
             return try? await withCheckedThrowingContinuation { continuation in
                 perform { (data, response, error) in
                     if let error {
+                        onError(error)
                         continuation.resume(throwing: error)
                     } else if let data, let response {
                         continuation.resume(returning: (data, response))
@@ -117,13 +118,13 @@ public extension URLRequest {
                             code: 0,
                             userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
                         )
+                        onError(error)
                         continuation.resume(throwing: error)
                     }
                 }
             }
         }
     }
-
 }
 
 public extension Encodable {
