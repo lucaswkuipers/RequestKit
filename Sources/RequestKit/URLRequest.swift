@@ -125,16 +125,21 @@ public extension URLRequest {
             }
         }
     }
+
+    @available(iOS 15, macOS 12, *)
+    func perform() async throws -> (data: Data, response: URLResponse) {
+        return try await URLSession.shared.data(for: self)
+    }
 }
 
 public extension Encodable {
-    func encoded(with encoder: JSONEncoder = JSONEncoder()) -> Data? {
-        try? encoder.encode(self)
+    func encoded(with encoder: JSONEncoder = JSONEncoder()) throws -> Data {
+        try encoder.encode(self)
     }
 }
 
 public extension Data {
-    func decoded<T: Decodable>(with decoder: JSONDecoder = JSONDecoder(), of type: T.Type) -> T? {
-        try? decoder.decode(type, from: self)
+    func decoded<T: Decodable>(with decoder: JSONDecoder = JSONDecoder(), of type: T.Type) throws -> T {
+        try decoder.decode(type, from: self)
     }
 }
