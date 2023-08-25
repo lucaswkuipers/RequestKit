@@ -128,7 +128,18 @@ public extension URLRequest {
 
     @available(iOS 15, macOS 12, *)
     func perform(on session: URLSession = URLSession.shared) async throws -> (data: Data, response: URLResponse) {
-        return try await session.data(for: self)
+        return try await withCheckedThrowingContinuation { continuation in
+            let task = session.dataTask(with: self) { data, response, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let data = data, let response = response {
+                    continuation.resume(returning: (data, response))
+                } else {
+                    // Handle unexpected case
+                }
+            }
+            task.resume()
+        }
     }
 }
 
