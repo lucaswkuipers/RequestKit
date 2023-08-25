@@ -101,9 +101,9 @@ public extension URLRequest {
     }
 
     @available(iOS 13.0, macOS 10.15, *)
-    func perform(onError: @escaping (Error) -> Void = {_ in}) async -> (data: Data, response: URLResponse)? {
+    func perform(on session: URLSession = URLSession.shared, onError: @escaping (Error) -> Void = {_ in}) async -> (data: Data, response: URLResponse)? {
         if #available(iOS 15.0, macOS 12.0, *) {
-            return try? await URLSession.shared.data(for: self)
+            return try? await session.data(for: self)
         } else {
             return try? await withCheckedThrowingContinuation { continuation in
                 perform { (data, response, error) in
@@ -127,8 +127,8 @@ public extension URLRequest {
     }
 
     @available(iOS 15, macOS 12, *)
-    func perform() async throws -> (data: Data, response: URLResponse) {
-        return try await URLSession.shared.data(for: self)
+    func perform(on session: URLSession = URLSession.shared) async throws -> (data: Data, response: URLResponse) {
+        return try await session.data(for: self)
     }
 }
 
