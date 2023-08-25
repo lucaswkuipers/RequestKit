@@ -96,35 +96,35 @@ public extension URLRequest {
         return request
     }
 
-    func perform(completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        URLSession.shared.dataTask(with: self, completionHandler: completion).resume()
-    }
+//    func perform(completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+//        URLSession.shared.dataTask(with: self, completionHandler: completion).resume()
+//    }
 
-    @available(iOS 13.0, macOS 10.15, *)
-    func perform(on session: URLSession = URLSession.shared, onError: @escaping (Error) -> Void = {_ in}) async -> (data: Data, response: URLResponse)? {
-        if #available(iOS 15.0, macOS 12.0, *) {
-            return try? await session.data(for: self)
-        } else {
-            return try? await withCheckedThrowingContinuation { continuation in
-                perform { (data, response, error) in
-                    if let error {
-                        onError(error)
-                        continuation.resume(throwing: error)
-                    } else if let data, let response {
-                        continuation.resume(returning: (data, response))
-                    } else {
-                        let error = NSError(
-                            domain: "",
-                            code: 0,
-                            userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
-                        )
-                        onError(error)
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        }
-    }
+//    @available(iOS 13.0, macOS 10.15, *)
+//    func perform(on session: URLSession = URLSession.shared, onError: @escaping (Error) -> Void = {_ in}) async -> (data: Data, response: URLResponse)? {
+//        if #available(iOS 15.0, macOS 12.0, *) {
+//            return try? await session.data(for: self)
+//        } else {
+//            return try? await withCheckedThrowingContinuation { continuation in
+//                perform { (data, response, error) in
+//                    if let error {
+//                        onError(error)
+//                        continuation.resume(throwing: error)
+//                    } else if let data, let response {
+//                        continuation.resume(returning: (data, response))
+//                    } else {
+//                        let error = NSError(
+//                            domain: "",
+//                            code: 0,
+//                            userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
+//                        )
+//                        onError(error)
+//                        continuation.resume(throwing: error)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     @available(iOS 15, macOS 12, *)
     func perform(on session: URLSession = URLSession.shared) async throws -> (data: Data, response: URLResponse) {
